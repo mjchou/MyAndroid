@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="systemInfo"
+            type="com.mvvm.zzy.mvvmforbt03.Model.Data.SystemInfo.SystemInfo"/>
+
+        <variable
+            name="receiveData"
+            type="com.mvvm.zzy.mvvmforbt03.Model.Data.DataStructures.ReceptionData"/>
+
+        <variable
+            name="receiveButton"
+            type="com.mvvm.zzy.mvvmforbt03.ViewModel.ButtonViewModel.ReceiveButtonViewModel"/>
+
+        <variable
+            name="clearButton"
+            type="com.mvvm.zzy.mvvmforbt03.ViewModel.ButtonViewModel.ClearButtonViewModel"/>
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/activity_data_transmission"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.mvvm.zzy.mvvmforbt03.View.DataTransmissionActivity">
+
+        <SurfaceView
+            android:id="@+id/sv_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:layout_marginTop="80dp" />
+
+        <TextView
+            android:id="@+id/tv_show_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignBottom="@+id/ll_service"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="100dp"
+            android:gravity="center_vertical"
+            android:visibility="@{systemInfo.receive ? View.VISIBLE : View.INVISIBLE}"
+            android:maxLines="10"
+            android:textIsSelectable="true"
+            android:textColor="#00896C"
+            android:background="#00ff00"
+            android:textSize="15sp"
+            app:newReceiveData="@{receiveData.toShow}"
+            app:isReceiveing="@{systemInfo.receive}"
+            app:isClear="@{systemInfo.clear}"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="350dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/ll_service">
+
+            <Button
+                style="?android:attr/buttonBarButtonStyle"
+                android:id="@+id/btn_switch_receive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="3"
+                android:background="@drawable/button_selector"
+                android:text="@{systemInfo.receive ? @string/receive_stop : @string/receive_begin}"
+                android:onClick="@{receiveButton.buttonChangedListener}"
+                />
+
+            <Button
+                style="?android:attr/buttonBarButtonStyle"
+                android:id="@+id/btn_clear_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_selector"
+                android:text="@string/clear"
+                android:onClick="@{clearButton.buttonChangedListener}"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>
